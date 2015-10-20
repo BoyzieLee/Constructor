@@ -2,40 +2,56 @@ import $ from 'jquery';
 import _ from 'underscore';
 import moment from 'moment';
 
-// Constructor (Blueprint)
-let Animal = function (params) {
-  
+// Constructor
+let MenuItem = function (params) {
+
   params = params || {};
 
-  this.name = params.name;
-  this.type = params.type;
-  this.legs = params.legs;
-  this.hasTail = params.tail;
+  this.id = params.id;
+  this.item = params.item;
+  this.price = params.price;
+  this.info = params.info;
+  this.quantity = 100;
 
-// this is realted to the instace that was crated for animal.
-// i.e. peanut
-  this.speak = function() {
-    return this.name + ' says: ' + params.sound;
-  };
+  this.soldOne = function () {
+    return this.quantity = this.quantity - 1;
+  }
+
+  this.eightSix = function () {
+    return this.quantity = 0;
+  }
 
 };
 
+let url = 'https://json-data.herokuapp.com/restaurant/menu/1';
+let menu = new Array(); // []
+let menuRequest = $.getJSON(url);
 
-// Instance 
-window.peanut = new Animal('');
+menuRequest.then( function (response) {
+
+  _.each(response.entrees, function (entree) {
+// loop through the data/ menu items in an array
+    let x = new MenuItem(entree);
+    menu.push(x);
+
+  });
+
+  console.log(menu);
+
+});
 
 
+// Function to sell an Item
+window.sellItem = function (specId) {
 
-console.log(peanut.type);
-console.log(peanut.speak());
+  // Take the id param
+  // Find the spec item in the array
+  let specItem = _.findWhere(menu, { id: specId });
+    
+  // Run that spec item's `soldOne` method
+  specItem.soldOne();
 
-// var x = {};
-// var y = new Object();
-// console.dir(x);
-// console.dir(y);
+  // log out the name + remaining quantity
+  console.log(specItem.item + ' has sold one, and there is ' + specItem.quantity + ' left.');
 
-// var a = [];
-// console.log(a);
-
-// var b = new Array();
-// console.
+};

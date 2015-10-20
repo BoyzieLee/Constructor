@@ -15,39 +15,54 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
-// Constructor (Blueprint)
-var Animal = function Animal(params) {
+// Constructor
+var MenuItem = function MenuItem(params) {
 
   params = params || {};
 
-  this.name = params.name;
-  this.type = params.type;
-  this.legs = params.legs;
-  this.hasTail = params.tail;
+  this.id = params.id;
+  this.item = params.item;
+  this.price = params.price;
+  this.info = params.info;
+  this.quantity = 100;
 
-  // this is realted to the instace that was crated for animal.
-  // i.e. peanut
-  this.speak = function () {
-    return this.name + ' says: ' + params.sound;
+  this.soldOne = function () {
+    return this.quantity = this.quantity - 1;
+  };
+
+  this.eightSix = function () {
+    return this.quantity = 0;
   };
 };
 
-// Instance
-window.peanut = new Animal('');
+var url = 'https://json-data.herokuapp.com/restaurant/menu/1';
+var menu = new Array(); // []
+var menuRequest = _jquery2['default'].getJSON(url);
 
-console.log(peanut.type);
-console.log(peanut.speak());
+menuRequest.then(function (response) {
 
-// var x = {};
-// var y = new Object();
-// console.dir(x);
-// console.dir(y);
+  _underscore2['default'].each(response.entrees, function (entree) {
+    // loop through the data/ menu items in an array
+    var x = new MenuItem(entree);
+    menu.push(x);
+  });
 
-// var a = [];
-// console.log(a);
+  console.log(menu);
+});
 
-// var b = new Array();
-// console.
+// Function to sell an Item
+window.sellItem = function (specId) {
+
+  // Take the id param
+  // Find the spec item in the array
+  var specItem = _underscore2['default'].findWhere(menu, { id: specId });
+
+  // Run that spec item's `soldOne` method
+  specItem.soldOne();
+
+  // log out the name + remaining quantity
+  console.log(specItem.item + ' has sold one, and there is ' + specItem.quantity + ' left.');
+};
 
 },{"jquery":2,"moment":3,"underscore":4}],2:[function(require,module,exports){
 /*!
