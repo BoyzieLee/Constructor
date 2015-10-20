@@ -3,26 +3,26 @@ import _ from 'underscore';
 import moment from 'moment';
 
 // Constructor (Blueprint)
-let Animal = function (name, type, legs, tail, sound) {
+let Animal = function (params) {
+  
+  params = params || {};
 
-  this.name = name;
-  this.type = type;
-  this.legs = legs;
-  this.hasTail = tail;
+  this.name = params.name;
+  this.type = params.type;
+  this.legs = params.legs;
+  this.hasTail = params.tail;
 
 // this is realted to the instace that was crated for animal.
 // i.e. peanut
   this.speak = function() {
-    return this.name + 'says:' +'sound';
+    return this.name + ' says: ' + params.sound;
   };
 
 };
 
 
 // Instance 
-window.peanut = new Animal('Sparky', 'Dog', 4, true, 'bark');
-window.jaws = new Animal('Burce', 'Shark', 0, true, 'da na...');
-window.george = new Animal('Tyler', 'Monkey', 2, true, 'ooh ah aha ah');
+window.peanut = new Animal('');
 
 
 

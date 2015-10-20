@@ -16,24 +16,24 @@ var _moment = require('moment');
 var _moment2 = _interopRequireDefault(_moment);
 
 // Constructor (Blueprint)
-var Animal = function Animal(name, type, legs, tail, sound) {
+var Animal = function Animal(params) {
 
-  this.name = name;
-  this.type = type;
-  this.legs = legs;
-  this.hasTail = tail;
+  params = params || {};
+
+  this.name = params.name;
+  this.type = params.type;
+  this.legs = params.legs;
+  this.hasTail = params.tail;
 
   // this is realted to the instace that was crated for animal.
   // i.e. peanut
   this.speak = function () {
-    return this.name + 'says:' + 'sound';
+    return this.name + ' says: ' + params.sound;
   };
 };
 
 // Instance
-window.peanut = new Animal('Sparky', 'Dog', 4, true, 'bark');
-window.jaws = new Animal('Burce', 'Shark', 0, true, 'da na...');
-window.george = new Animal('Tyler', 'Monkey', 2, true, 'ooh ah aha ah');
+window.peanut = new Animal('');
 
 console.log(peanut.type);
 console.log(peanut.speak());
